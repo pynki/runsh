@@ -1,0 +1,17 @@
+export LOG_LEVEL=0
+export LOG_CONSOLE=1
+export LOG_FILE=0
+export LOG_DATE=1
+export LOG_DATE_FORMAT=1
+export LOG_FILE_NAME=NONE
+export LOG_FILE_PATH=NONE
+case "$LOG_DATE_FORMAT" in
+	0 ) export LOG_DATE_FORMAT_OPTIONS=+%Y/%m/%d-%H:%M:%S;;
+	1 ) export LOG_DATE_FORMAT_OPTIONS=+%H:%M:%S;;
+	* ) export LOG_DATE_FORMAT_OPTIONS="";;
+esac
+
+if [ "$LOG_DATE" = 1 ]; then
+	export LOG_PREFIX_CONSOLE=[`date $LOG_DATE_FORMAT_OPTIONS`]
+fi	
+export LOG_PREFIX_FILE=$LOG_PREFIX_CONSOLE
