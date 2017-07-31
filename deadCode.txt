@@ -1,0 +1,45 @@
+################################################################################
+# REMOTE CHECKS
+################################################################################
+if [ ! -z "$REMOTE_TYPE" ]; then
+	log "REMOTE_TYPE defined. REMOTE_TYPE is: $REMOTE_TYPE" 0
+	if [[ "$REMOTE_TYPE" == *"n"* ]]; then
+		log 'Test if $TARGET_IP, $TARGET_USER and $TARGET_PASSWD are defined' 0
+		if [ ! -z "$TARGET_IP" ] &&  [ ! -z "$TARGET_USER" ] && [ ! -z "$TARGET_PASSWD" ]; then
+			log "Test for vars: 		OK" 0
+			log "TARGET_IP is:     		$TARGET_IP" 1
+			log "TARGET_USER is:   		$TARGET_USER" 1
+			log "TARGET_PASSWD is: 		$TARGET_PASSWD" 1
+			log "Test if $TARGET_IP is reachable" 0
+			checkOnline $TARGET_IP
+			if [ ! $? -eq 0 ]; then
+				quit "Cannot ping $TARGET_IP. Is remote connected?" 1
+			else
+				log "Test if we can execute commands on the remote system via SSH" 0
+				netExe 0 "cat /etc/hostname" $TARGET_IP $TARGET_USER $TARGET_PASSWD
+				 if [ ! $? -eq 0 ]; then
+                	quit "Cannot execute command on remote. Is SSH enabled?" 1
+				fi
+			fi
+		else
+			quit "Test for vars $TARGET_IP, $TARGET_USER or $TARGET_PASSWD: 		FAIL!" 1
+		fi
+	fi
+	if [[ "$REMOTE_TYPE" == *"u"* ]]; then
+        log "Test if TARGET_USB is defined" 0
+		if [ ! -z "$TARGET_USB" ]; then
+			log "Test for vars: 		OK" 0
+			log "TARGET_USB is: 		$TARGET_USB" 1
+			lsusb | grep -qw "$TARGET_USB"
+			if [ ! $? -eq 0 ]; then
+				quit "Cannot find USB device $TARGET_USB." 1
+			else
+				log "Found USB device $TARGET_USB" 0
+			fi				
+		else
+        	quit "Test for var $TARGET_USB: 		FAIL!" 1
+		fi
+	fi
+else
+	log '$REMOTE_TYPE not defined, skipping tests for remote systems' 0
+fi
