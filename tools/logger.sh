@@ -37,13 +37,13 @@ log() {
 		buildMsg $LEVEL
 	fi
 	case "$LEVEL" in
-		0 ) PREFIX="[DEBUG]";;
-		1 ) PREFIX="[INFO] ";;
-		2 ) PREFIX="[WARN] ";;
-		3 ) PREFIX="[ERROR]";;
+		0 )  PREFIX="[DEBUG]";;
+		1 )  PREFIX="[INFO] ";;
+		2 )  PREFIX="[WARN] ";;
+		3 )  PREFIX="[ERROR]";;
 		10 ) PREFIX="[EXEC] ";;
 		11 ) PREFIX="[EXIT] ";;
-		* ) PREFIX="[MISC] ";;
+		* )  PREFIX="[MISC] ";;
 	esac
 	if [ "$LEVEL" -gt "$LOG_LEVEL" -o "$LEVEL" -eq "$LOG_LEVEL" ]; then 		
 		if [ $LOG_CONSOLE = 1 ]; then

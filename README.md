@@ -1,7 +1,13 @@
-First draft of the run.sh scripts
+Script to wrap a script call. Meant to source common functionality in a single script to save effort in the actual called script. For now just providing logger functionality and some network functions (see the ./tools/tools.sh).
 
-Wraps common functionality scripts might use in a basic script.
+See the scripts/test/test.sh and scripts/test/test.conf on how to use the logging functionality.
 
-Wrote a lot of scripts the last days and found that a lot of the funtionality like logging/checking for resources are taking a lot of time to write over and over again for each script. this is a first draft of a centralized resource checking script that checks pre-script-call if the resources needed are present.
+Call 
+```bash
+./run.sh ./scripts/test/test.conf
+```
 
-do not use. work in progress...
+to run the test script.
+
+
+This a very first draft, quick and dirty - use on your own risk
