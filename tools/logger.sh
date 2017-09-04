@@ -45,11 +45,14 @@ log() {
 		11 ) PREFIX="[EXIT] ";;
 		* )  PREFIX="[MISC] ";;
 	esac
+	if [ "$LOG_DATE" = 1 ]; then
+		LOG_PREFIX_CONSOLE=[`date $LOG_DATE_FORMAT_OPTIONS`]
+	fi	
 	if [ "$LEVEL" -gt "$LOG_LEVEL" -o "$LEVEL" -eq "$LOG_LEVEL" ]; then 		
 		if [ $LOG_CONSOLE = 1 ]; then
 			if [ "$SKIP_PREFIX" = 1 ]; then
 				echo $MSG
-			else		
+			else				
 				echo "$PREFIX$LOG_PREFIX_CONSOLE$SCRIPT_LOG_PREFIX $MSG"
 			fi
 		fi

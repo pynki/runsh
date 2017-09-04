@@ -1,11 +1,20 @@
 #!/bin/bash
 
-#defines how often the online checker pings the target
+# call convertDateToEpoch $RETURN_VAL $DATE
+# converts date to since epoch
+# tested date formats:
+# "2017-07-01 08:00:00"
+# "01 Jul 2017 08:00:00"
+convertDateToEpoch() {
+	echo "DATE in is: $2"
+    declare -n reVal=$1
+	local date=$(($(date --date="$2" +'%s * 1000 + %-N / 1000000')))
+	reVal=$date
+}
 
-
+#call: checkOnline @TARGET_IP
 # Checks if a host is online
 # It just tried to ping it serveral times and see if the host answers
-#call: checkOnline @TARGET_IP
 checkOnline() {
 	local TOOLS_CHECK_ONLINE_COUNT=3 #TODO: rethink and rename...
 	if [ "$#" -ne 2 ]; then
@@ -24,8 +33,8 @@ checkOnline() {
 	return 0
 }
 
-# Copies a file to a network target
 # call: netCopy $FILE $TARGET_FILE $TARGET_IP $TARGET_USER $TARGET_PASSWD
+# Copies a file to a network target
 netCopy() {
 	if [ "$#" -ne 6 ]; then	
 		log "netCopy() - Copy $1 to $4@$3:$2" 1
@@ -37,8 +46,9 @@ netCopy() {
 	return 0
 }
 
-# Executes command on remote system
+
 # call: netExe $SUDO $COMMAND $TARGET_IP $TARGET_USER $TARGET_PASSWD
+# Executes command on remote system
 netExe() {
 	if [ "$#" -ne 6 ]; then
 		if [ $1 -eq 1 ]; then
@@ -59,8 +69,8 @@ netExe() {
 	return 0
 }
 
-# Checks if a host is configured in a ssh config file
 # call: checkHostExistsInSSHConfig $SSH_HOSTNAME
+# Checks if a host is configured in a ssh config file
 # needs $SSH_CONFIG configutred and pointing to an ssh config file
 checkHostExistsInSSHConfig() {
 	if [ -z "$SSH_CONFIG" ]; then
@@ -84,8 +94,8 @@ checkHostExistsInSSHConfig() {
 	return 0
 }
 
-# Checks if a packet is installed
 # call: checkIfInstalled REMOTE PACKAGE_NAME INSTALL_IF_NOT_INSTALLED(any input)
+# Checks if a packet is installed
 # needs dpkg
 #TODO nicer output....
 checkIfInstalled() {
@@ -113,8 +123,8 @@ checkIfInstalled() {
 	return 0
 }
 
-# Installs packages
 # call: 
+# Installs packages
 # needs apt-get
 installWithApt() {
 	echo "updateing apt lists because 1"
@@ -122,6 +132,7 @@ installWithApt() {
 	return 0
 }
 
+export -f convertDateToEpoch
 export -f netExe
 export -f netCopy
 export -f checkOnline
