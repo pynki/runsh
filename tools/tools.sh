@@ -6,7 +6,7 @@
 # "2017-07-01 08:00:00"
 # "01 Jul 2017 08:00:00"
 convertDateToEpoch() {
-	echo "DATE in is: $2"
+	log "DATE in is: $2" 0
     declare -n reVal=$1
 	local date=$(($(date --date="$2" +'%s * 1000 + %-N / 1000000')))
 	reVal=$date
