@@ -10,6 +10,13 @@ Call
 
 to run the test script.
 
+There is only one value in the config file that needs to be present:
+
+`EXEC_SCRIPT="../runsh_testScript/test.sh`
+
+All other values that may be specified in other script-conig files provided by the pynki github account are script specific.
+
+
 # Remarks
 
 This is work in progress. There might be bugs, unhandled corner cases or plain stupid code in the scripts. It works for me, in the cases i use it. If you need something changed: open an issue or fork the code. I am happy about pull requests.
